@@ -63,7 +63,12 @@ function preloadImages() {
 
   const loadImage = async (src) => {
     const blob = await fetch(src, {
-      mode: "no-cors"
+      headers: {
+        'Access-Control-Allow-Origin':'*',
+        'Accept':'*/*',
+        'Accept-Encoding:':'gzip, deflate, br',
+        'Connection':'keep-alive'
+      }
     }
        ).then(res => res.blob());
     return new Promise((res, rej) => {
