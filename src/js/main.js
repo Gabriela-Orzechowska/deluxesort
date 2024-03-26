@@ -53,6 +53,32 @@ let totalBattles    = 0;
 let sorterURL       = window.location.host + window.location.pathname;
 let storedSaveType  = localStorage.getItem(`${sorterURL}_saveType`);
 
+
+/** 
+ * Preloads images in the filtered character data and converts to base64 representation.
+*/
+function preloadImages() {
+  const totalLength = characterDataToSort.length;
+  let imagesLoaded = 0;
+
+  const loadImage = async (src) => {
+    const blob = await fetch(src).then(res => res.blob());
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        progressBar(`Loading Image ${++imagesLoaded}`, Math.floor(imagesLoaded * 100 / totalLength));
+        res(ev.target.result);
+      };
+      reader.onerror = rej;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  return Promise.all(characterDataToSort.map(async (char, idx) => {
+    characterDataToSort[idx].img = await loadImage(imageRoot + char.img);
+  }));
+}
+
 /** Initialize script. */
 function init() {
 
@@ -757,31 +783,6 @@ function decodeQuery(queryString = window.location.search.slice(1)) {
   }
 
   if (successfulLoad) { start(); }
-}
-
-/** 
- * Preloads images in the filtered character data and converts to base64 representation.
-*/
-function preloadImages() {
-  const totalLength = characterDataToSort.length;
-  let imagesLoaded = 0;
-
-  const loadImage = async (src) => {
-    const blob = await fetch(src).then(res => res.blob());
-    return new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = ev => {
-        progressBar(`Loading Image ${++imagesLoaded}`, Math.floor(imagesLoaded * 100 / totalLength));
-        res(ev.target.result);
-      };
-      reader.onerror = rej;
-      reader.readAsDataURL(blob);
-    });
-  };
-
-  return Promise.all(characterDataToSort.map(async (char, idx) => {
-    characterDataToSort[idx].img = await loadImage(imageRoot + char.img);
-  }));
 }
 
 /**
