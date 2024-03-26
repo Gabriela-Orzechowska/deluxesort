@@ -779,6 +779,8 @@ function preloadImages() {
     });
   };
 
+  return;
+
   return Promise.all(characterDataToSort.map(async (char, idx) => {
     characterDataToSort[idx].img = await loadImage(imageRoot + char.img);
   }));
