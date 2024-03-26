@@ -642,7 +642,7 @@ function setLatestDataset() {
   characterData = dataSet[currentVersion].characterData;
   options = dataSet[currentVersion].options;
 
-  populateOptions();
+  // populateOptions();
 }
 
 /** Populate option list. */
