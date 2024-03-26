@@ -20,4 +20,4 @@ let dataSetVersion = '2024-03-26';
 /**
  * Image root, will be appended to the start of every image URL.
  */
-const imageRoot = 'https://ct.wiimm.de/api/get-start-image?sha1=';
+const imageRoot = '';
