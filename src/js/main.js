@@ -66,7 +66,6 @@ function preloadImages() {
       headers: {
         'Access-Control-Allow-Origin':'*',
         'Accept':'*/*',
-        'Accept-Encoding:':'gzip, deflate, br',
         'Connection':'keep-alive'
       }
     }
